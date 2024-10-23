@@ -1,34 +1,18 @@
 {
     "require": {
         "firebase/php-jwt": "^6.10",
-        "php": "^8.2",
-        "ext-iconv": "*",
-        "ext-json": "*",
-        "ext-mysqli": "*",
-        "ext-openssl": "*",
-        "ext-pcre": "*",
-        "ext-xml": "*",
-        "composer/ca-bundle": "^1.2",
-        "google/recaptcha": "^1.1",
-        "nikic/fast-route": "^1.3",
-        "paragonie/sodium_compat": "^1.17",
-        "phpmyadmin/motranslator": "^5.0",
-        "phpmyadmin/shapefile": "^3.0.1",
-        "phpmyadmin/sql-parser": "^5.6.0",
-        "phpmyadmin/twig-i18n-extension": "^4.0",
-        "psr/http-factory": "^1.0",
-        "psr/http-message": "^1.0",
-        "slim/psr7": "^1.4",
-        "symfony/config": "^5.2.3",
-        "symfony/dependency-injection": "^5.2.3",
-        "symfony/expression-language": "^5.2.3",
-        "symfony/polyfill-ctype": "^1.17.0",
-        "symfony/polyfill-mbstring": "^1.17.0",
-        "symfony/polyfill-php80": "^1.16",
-        "twig/twig": "^3.3.5",
-        "webmozart/assert": "^1.10",
-        "williamdes/mariadb-mysql-kbs": "^1.2"
+        "php": "^8.2"
+    },
+    "require-dev": {
+        "guzzlehttp/guzzle": "^7.4",
+        "phpspec/prophecy-phpunit": "^2.0",
+        "phpunit/phpunit": "^9.5",
+        "psr/cache": "^2.0 || ^3.0",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0"
+    },
+    "suggest": {
+        "ext-sodium": "Support EdDSA (Ed25519) signatures",
+        "paragonie/sodium_compat": "Support EdDSA (Ed25519) signatures when libsodium is not present"
     }
 }
-
-        
