@@ -1,6 +1,7 @@
 {
     "require": {
         "firebase/php-jwt": "^6.10",
-        "php": "^8.2"
+        "php": "^8.2",
+        "ext-gd": "*"
     }
 }
