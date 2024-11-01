@@ -35,7 +35,7 @@ if ($photo_Id) {
     ];
     echo json_encode($data); 
 } else {
-    echo json_encode(['error' => '無 AlbumID']);
+    echo json_encode(['error' => 'No AlbumID']);
 }
 
 ?>

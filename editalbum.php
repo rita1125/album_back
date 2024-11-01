@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     $sqlresult->bind_param("ssssi", $album_name, $album_desc, $album_date, $album_place, $album_id); // 綁定參數，最後一個參數是 album_id (int)
     $sqlresult->execute(); 
     error_log("收到修改相簿要求 photo_id: " . $_GET["albumId"]);
-    echo json_encode(['success' => '相簿已更新']);
+    echo json_encode(['success' => 'Album already updated']);
 }
 }
 
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 //             WHERE album_id=".$_GET["albumId"];
 //     mysqli_query($link, $sql);
 //     error_log("收到修改相簿要求 photo_id: " . $_GET["albumId"]);
-//     echo json_encode(['success' => '相簿已更新']);
+//     echo json_encode(['success' => 'Album already updated']);
 //     exit();
 // }
 

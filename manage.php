@@ -107,9 +107,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
   mysqli_stmt_close($photo_delete);
 
   if ($albumDeleted && $photoDeleted) {
-      echo json_encode(['message' => '刪除Album成功']);
+      echo json_encode(['message' => 'Album deleted successfully']);
   } else {
-      echo json_encode(['error' => '刪除Album失敗']);
+      echo json_encode(['error' => 'Failed to delete album']);
   }
 }
 

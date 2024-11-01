@@ -56,7 +56,7 @@ if ($album_id) {
     ];
     echo json_encode($data); 
 } else {
-    echo json_encode(['error' => '無 AlbumID']);
+    echo json_encode(['error' => 'No AlbumID']);
 }
 
 
@@ -118,13 +118,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
             // 關閉語句，釋放資源
             mysqli_stmt_close($sql_delete);
         } else {
-            echo json_encode(['error' => '準備刪除語句失敗']);
+            echo json_encode(['error' => 'Preparing delete statement failed']);
         }
 
         // 關閉查詢語句
         mysqli_stmt_close($sql_select);
     } else {
-        echo json_encode(['error' => '準備選擇語句失敗']);
+        echo json_encode(['error' => 'Preparing select statement failed']);
     }
 
 }

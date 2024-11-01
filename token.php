@@ -19,9 +19,9 @@ if (isset($data->token)) {
         echo json_encode(["success" => true, "decoded" => $decoded]);
     } catch (Exception) {
         // token 無效或過期
-        echo json_encode(["success" => false, "message" => "token無效或過期"]);
+        echo json_encode(["success" => false, "message" => "Token is invalid or expired"]);
     }
 } else {
-    echo json_encode(["success" => false, "message" => "沒有token"]);
+    echo json_encode(["success" => false, "message" => "No token"]);
 }
 ?>
