@@ -15,37 +15,21 @@ if (isset($_POST["album_id"])) {
           $desc = uniqid();
           $src_ext = strtolower(pathinfo($_FILES["up_photo"]["name"][$key], PATHINFO_EXTENSION));
           $desc_file_name = $desc . "." . $src_ext;
-          // $thumbnail_desc_file_name = "./public/images/thumbnail/$desc_file_name";
-          $frontend_url = getenv('FRONTEND_URL');
-          if($frontend_url){
-            $thumbnail_desc_file_name = "$frontend_url/images/thumbnail/$desc_file_name";
-          }else{
-            $thumbnail_desc_file_name = "C:/xampp/htdocs/album_nextjs/client/public/images/thumbnail/$desc_file_name";
-          }
-  
+          //$thumbnail_desc_file_name = "C:/xampp/htdocs/album_nextjs/client/public/images/thumbnail/$desc_file_name";
+          $thumbnail_desc_file_name = "./public/images/thumbnail/$desc_file_name";
+          
           //調整圖片大小
           resize_photo($tmp_name, $src_ext, $thumbnail_desc_file_name, 250);
   
           //把檔案移動到指定目錄，並插入DB
-          //if (move_uploaded_file($tmp_name, "public/images/bigphoto/" . $desc_file_name)) {
-          if($frontend_url){
-            if (move_uploaded_file($tmp_name, "$frontend_url/images/bigphoto/" . $desc_file_name)) {
-              $sql = "INSERT INTO photo(album_id, photo_file) VALUES (?, ?)";
+          //if (move_uploaded_file($tmp_name, "C:/xampp/htdocs/album_nextjs/client/public/images/bigphoto/" . $desc_file_name)) {
+          if (move_uploaded_file($tmp_name, "./public/images/bigphoto/" . $desc_file_name)) {   
+            $sql = "INSERT INTO photo(album_id, photo_file) VALUES (?, ?)";
               $sqlresult = $link->prepare($sql);
               $sqlresult->bind_param("is", $album_id, $desc_file_name);
               $sqlresult->execute();
-            } else {
+          } else {
               error_log("無法移動檔案: " . $_FILES["up_photo"]["name"][$key]);
-            }
-          }else{
-            if (move_uploaded_file($tmp_name, "C:/xampp/htdocs/album_nextjs/client/public/images/bigphoto/" . $desc_file_name)) {
-              $sql = "INSERT INTO photo(album_id, photo_file) VALUES (?, ?)";
-              $sqlresult = $link->prepare($sql);
-              $sqlresult->bind_param("is", $album_id, $desc_file_name);
-              $sqlresult->execute();
-            } else {
-              error_log("無法移動檔案: " . $_FILES["up_photo"]["name"][$key]);
-            }
           }
         }
       }

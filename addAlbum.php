@@ -29,37 +29,21 @@ if(isset($_POST["album_name"])) {
             $desc = uniqid();
             $src_ext = strtolower(pathinfo($_FILES["up_photo"]["name"][$key], PATHINFO_EXTENSION));
             $desc_file_name = $desc . "." . $src_ext;
-            //$thumbnail_desc_file_name = "./public/images/thumbnail/$desc_file_name";
-            $frontend_url = getenv('FRONTEND_URL');
-            if($frontend_url){
-              $thumbnail_desc_file_name = "$frontend_url/images/thumbnail/$desc_file_name";
-            }else{
-              $thumbnail_desc_file_name = "C:/xampp/htdocs/album_nextjs/client/public/images/thumbnail/$desc_file_name";
-            }
-
+            //$thumbnail_desc_file_name = "C:/xampp/htdocs/album_nextjs/client/public/images/thumbnail/$desc_file_name";
+            $thumbnail_desc_file_name = "./public/images/thumbnail/$desc_file_name";
+            
             //調整圖片大小
             resize_photo($tmp_name, $src_ext, $thumbnail_desc_file_name, 250);
 
             // 把檔案移動到指定目錄，並插入DB
-            //if (move_uploaded_file($tmp_name, "前端網址/public/images/bigphoto/" . $desc_file_name)) {
-            if($frontend_url){
-              if (move_uploaded_file($tmp_name, "$frontend_url/images/bigphoto/" . $desc_file_name)) {
+            //if (move_uploaded_file($tmp_name, "C:/xampp/htdocs/album_nextjs/client/public/images/bigphoto/" . $desc_file_name)) {
+            if (move_uploaded_file($tmp_name, "./public/images/bigphoto/" . $desc_file_name)) {
                 $sql = "INSERT INTO photo(album_id, photo_file) VALUES (?, ?)"; // ?:佔位符
                 $sqlresult = $link->prepare($sql); //prepare 防止 SQL注入，允許安全地執行帶有參數的 SQL查詢
                 $sqlresult->bind_param("is", $album_id, $desc_file_name); //綁定參數，兩個參數 : is (int跟str意思)
                 $sqlresult->execute();
-              } else {
+            } else {
                   error_log("無法移動檔案: " .$_FILES["up_photo"]["name"][$key]);
-              }
-            }else{
-              if (move_uploaded_file($tmp_name, "C:/xampp/htdocs/album_nextjs/client/public/images/bigphoto/" . $desc_file_name)) {
-                $sql = "INSERT INTO photo(album_id, photo_file) VALUES (?, ?)"; // ?:佔位符
-                $sqlresult = $link->prepare($sql); //prepare 防止 SQL注入，允許安全地執行帶有參數的 SQL查詢
-                $sqlresult->bind_param("is", $album_id, $desc_file_name); //綁定參數，兩個參數 : is (int跟str意思)
-                $sqlresult->execute();
-              } else {
-                  error_log("無法移動檔案: " .$_FILES["up_photo"]["name"][$key]);
-              }
             }
         }
     }
