@@ -37,6 +37,10 @@ if (isset($_POST["album_id"])) {
             // 上傳到 Imgur
             $imgurLink = uploadToImgur("./public/images/bigphoto/" . $desc_file_name);
 
+            $imgurLink = isset($imgurLink) ? $imgurLink : 'default_value';
+            $resizeImgurLink = isset($resizeImgurLink) ? $resizeImgurLink : 'default_value';
+            
+
             if ($imgurLink) {
                 // imgur自動幫忙生成縮圖之 URL，有不同尺寸，在檔名最後面加上s、m、l做區分 (小、中、大)，例如 eDQib1M.png 變成 eDQib1Ms.png
                 // 用 pathinfo 解析 URL: 路徑 dirname、檔名filename、副檔名 extension
@@ -44,10 +48,18 @@ if (isset($_POST["album_id"])) {
                 // 重組縮圖 URL，在副檔名前加上 "m"(中尺寸)
                 $resizeImgurLink = $linkInfo['dirname'] . '/' . $linkInfo['filename'] . 'm.' . $linkInfo['extension'];
                 // 把圖片 URL 插入數據庫
-                $sql = "INSERT INTO photo(album_id, photo_file, imgur_link, imgur_resize_link) VALUES (?, ?, ?, ?)";  // imgur_link 欄位
-                $sqlresult = $link->prepare($sql);
-                $sqlresult->bind_param("isss", $album_id, $desc_file_name, $imgurLink, $resizeImgurLink);
-                $sqlresult->execute();
+                // $sql = "INSERT INTO photo(album_id, photo_file, imgur_link, imgur_resize_link) VALUES (?, ?, ?, ?)";  // imgur_link 欄位
+                // $sqlresult = $link->prepare($sql);
+                // $sqlresult->bind_param("isss", $album_id, $desc_file_name, $imgurLink, $resizeImgurLink);
+                // $sqlresult->execute();
+                try {
+                  $sql = "INSERT INTO photo(album_id, photo_file, imgur_link, imgur_resize_link) VALUES (?, ?, ?, ?)";
+                  $stmt = $link->prepare($sql);
+                  $stmt->bind_param("isss", $album_id, $desc_file_name, $imgurLink, $resizeImgurLink);
+                  $stmt->execute();
+                } catch (Exception $e) {
+                    error_log("資料庫插入錯誤: " . $e->getMessage());
+                }
 
             } else {
                 // 處理 imgur 上傳錯誤
@@ -59,7 +71,13 @@ if (isset($_POST["album_id"])) {
         }
       }
     }
-    echo json_encode(["success" => true]);
+    echo json_encode([
+      "success" => true,
+      "imgur_link" => $imgurLink,
+      "imgur_resize_link" => $resizeImgurLink,
+      "album_id" => $album_id,
+      "photo_file" => $desc_file_name
+    ]);
   } else {
     echo json_encode(["success" => false, "message" => "No album_id"]);
   }
