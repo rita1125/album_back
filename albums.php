@@ -11,7 +11,7 @@ header('Content-Type: application/json');
 
 require_once("connMysql.php");
 
-$sql = "SELECT album.album_id, album.album_name, photo.photo_file, count(photo.album_id) as photo_count 
+$sql = "SELECT album.album_id, album.album_name, photo.photo_file, photo.imgur_link, photo.imgur_resize_link, count(photo.album_id) as photo_count 
         FROM album 
         LEFT JOIN photo ON album.album_id = photo.album_id 
         GROUP BY album.album_id 

@@ -14,7 +14,7 @@ require_once("connMysql.php");
 
 //取得圖片
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-  $sql = "SELECT album.album_id, album.album_name, photo.photo_file
+  $sql = "SELECT album.album_id, album.album_name, photo.photo_file, photo.imgur_link, photo.imgur_resize_link
           FROM album
           LEFT JOIN photo ON album.album_id = photo.album_id
           GROUP BY album.album_id
