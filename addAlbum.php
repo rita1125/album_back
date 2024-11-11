@@ -74,9 +74,16 @@ if(isset($_POST["album_name"])) {
 } else {
     error_log("未上傳任何檔案");
 }
-  echo json_encode(["success" => true]);
+  // echo json_encode(["success" => true]);
+  echo json_encode([
+    "success" => true,
+    "imgur_link" => $imgurLink,
+    "imgur_resize_link" => $resizeImgurLink,
+    "album_id" => $album_id,
+    "photo_file" => $desc_file_name
+  ]);
 } else {
-  echo json_encode(["success" => false]);
+  echo json_encode(["success" => false, "error" => $sqlresult->error]);
 }
 
 
