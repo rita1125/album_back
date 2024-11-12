@@ -30,7 +30,8 @@
     $result = mysqli_stmt_get_result($stmt);
     $row = mysqli_fetch_assoc($result);
 
-    if ($row && $_POST["password"] == $row["password"]) { // 直接比較密碼
+    //if ($row && $_POST["password"] == $row["password"]) {
+    if ($row && password_verify($_POST["password"], $row["password"])) { 
       //編碼到token的資料
       $payload = [
           "username" => $row["username"],
